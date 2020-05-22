@@ -8,33 +8,6 @@ const load = () => {
   return divLoad;
 };
 
-const Onload = () => {
-  const items = document.querySelector('.items');
-  const divLoad = load();
-  items.appendChild(divLoad);
-
-  findProducts('computador')
-    .then(response => response.json())
-    .then((data) => {
-      if (data.results.length > 0) {
-        data.results.forEach((item) => {
-          const objectProduct = { sku: item.id, name: item.title, image: item.thumbnail }
-          items.appendChild(createProductItemElement(objectProduct));
-        });
-        items.removeChild(divLoad);
-      } else {
-        items.innerHTML = 'Esta informação veio sem registros!!';
-      }
-    })
-    .catch((err) => {
-      items.innerHTML = `Oops! ${err}`;
-    });
-};
-
-window.onload = function onload() {
-  Onload();
-};
-
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -76,3 +49,30 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
+
+const Onload = () => {
+  const items = document.querySelector('.items');
+  const divLoad = load();
+  items.appendChild(divLoad);
+
+  findProducts('computador')
+    .then(response => response.json())
+    .then((data) => {
+      if (data.results.length > 0) {
+        data.results.forEach((item) => {
+          const objectProduct = { sku: item.id, name: item.title, image: item.thumbnail };
+          items.appendChild(createProductItemElement(objectProduct));
+        });
+        items.removeChild(divLoad);
+      } else {
+        items.innerHTML = 'Esta informação veio sem registros!!';
+      }
+    })
+    .catch((err) => {
+      items.innerHTML = `Oops! ${err}`;
+    });
+};
+
+window.onload = function onload() {
+  Onload();
+};
