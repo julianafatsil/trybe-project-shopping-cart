@@ -1,6 +1,6 @@
 
 // Faz a comunicação com a API, recebendo por parâmetro o que vai ser consultado
-const findProducts = nameProduct => 
+const findProducts = nameProduct =>
   fetch(`https://api.mercadolibre.com/sites/MLB/search?q=${nameProduct}`);
 
 const load = () => {
@@ -42,8 +42,8 @@ function getSkuFromProductItem(item) { // Recebe o item clicado
 }
 
 function cartItemClickListener(event) {
-  // Digite seu código aqui
-  // Fazer o deletar função
+  // remove item
+  console.log(event.path[0].remove());
 }
 
 const findProductsCart = idProduct =>
@@ -69,7 +69,7 @@ const addItemCart = (event) => { // Pega evento do click
     });
 };
 // Arrow function, que retorna todos os items da API, como filhos da classe ITEMS
-const Onload = () => { 
+const Onload = () => {
   const items = document.querySelector('.items'); // Pegando a primeira classe que ele encontra .items
   const divLoad = load();
   // Recebe a criação da load, para add e depois excluir após items já serem carregados
