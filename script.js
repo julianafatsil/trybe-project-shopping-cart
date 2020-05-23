@@ -1,5 +1,6 @@
 
-const findProducts = nameProduct => // Faz a comunicação com a API, recebendo por parâmetro o que vai ser consultado
+// Faz a comunicação com a API, recebendo por parâmetro o que vai ser consultado
+const findProducts = nameProduct => 
   fetch(`https://api.mercadolibre.com/sites/MLB/search?q=${nameProduct}`);
 
 const load = () => {
@@ -36,8 +37,8 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 
-function getSkuFromProductItem(item) { //recebe o item clicado
-  return item.querySelector('span.item__sku').innerText; //retorna o id
+function getSkuFromProductItem(item) { // Recebe o item clicado
+  return item.querySelector('span.item__sku').innerText; // Retorna o id
 }
 
 function cartItemClickListener(event) {
@@ -59,30 +60,30 @@ function createCartItemElement({ sku, name, salePrice }) {
 const addItemCart = (event) => { // Pega evento do click
   findProductsCart(getSkuFromProductItem(event.path[1])) // passando como parametro o id
     .then(response => response.json())
-    .then(data => {
+    .then((data) => {
       const objectProductSelected = { sku: data.id, name: data.title, salePrice: data.price };
       // createProductItemElement recebe objeto, o mesmo é criado como filho do items
       const itemSelectedCart = document.querySelector('.cart__items');
-      //adiciona produto no carrinho
+      // Adiciona produto no carrinho
       itemSelectedCart.appendChild(createCartItemElement(objectProductSelected));
     });
 };
-
-const Onload = () => { // Arrow function, que retorna todos os items da API do Mercado Livre, como filhos da classe ITEMS
+// Arrow function, que retorna todos os items da API, como filhos da classe ITEMS
+const Onload = () => { 
   const items = document.querySelector('.items'); // Pegando a primeira classe que ele encontra .items
   const divLoad = load();
-  // Recebe a criação da load, por que vai ser usada, para adicionar e depois excluir após todos os items já serem carregados
+  // Recebe a criação da load, para add e depois excluir após items já serem carregados
   items.appendChild(divLoad); // Adicionando a divLoad, como um filho do items
 
   items.addEventListener('click', addItemCart); // Pega item clicado, e chama a função
 
   findProducts('computador') // passando o 'computador' por parametro para a função
-    .then(response => response.json()) // primeiro espera a resposta do findProducts
-    .then((data) => { //espera vim a resposat do them acima
-      if (data.results.length > 0) { // se resposta do then, vem com items
-        data.results.forEach((item) => { // pega alguns dados do que veio da api {}
+    .then(response => response.json()) // Primeiro espera a resposta do findProducts
+    .then((data) => { // Espera vim a resposat do them acima
+      if (data.results.length > 0) { // Se resposta do then, vem com items
+        data.results.forEach((item) => { // Pega alguns dados do que veio da api {}
           const objectProduct = { sku: item.id, name: item.title, image: item.thumbnail };
-          // createProductItemElement recebe objeto, o mesmo é criado como filho do items
+          // CreateProductItemElement recebe objeto, o mesmo é criado como filho do items
           items.appendChild(createProductItemElement(objectProduct));
         });
         // remove a div load, pois ja foi carregado todos os items
