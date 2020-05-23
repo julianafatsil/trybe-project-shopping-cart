@@ -42,8 +42,8 @@ function getSkuFromProductItem(item) { // Recebe o item clicado
 }
 
 function cartItemClickListener(event) {
-  // remove item
-  console.log(event.path[0].remove());
+  // pega primeira classe e remove seu filho que foi passado no event
+  document.querySelector('.cart__items').removeChild(event.path[0]);
 }
 
 const findProductsCart = idProduct =>
