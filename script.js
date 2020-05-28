@@ -58,7 +58,7 @@ function createCartItemElement({ sku, name, salePrice }) {
 }
 
 const addItemCart = (event) => { // Pega evento do click
-  findProductsCart(getSkuFromProductItem(event.path[1])) // passando como parametro o id
+  findProductsCart(getSkuFromProductItem(event.path[1])) // passando como parãmetro o id
     .then(response => response.json())
     .then((data) => {
       const objectProductSelected = { sku: data.id, name: data.title, salePrice: data.price };
@@ -97,6 +97,18 @@ const Onload = () => {
     });
 };
 
+const removeAll = () => {
+  const buttonRemoveAll = document.createElement('button');
+  buttonRemoveAll.innerText = 'Esvaziar carrinho';
+  buttonRemoveAll.className = 'empty-cart';
+  buttonRemoveAll.addEventListener('click', () => {
+    document.querySelector('.cart__items').innerHTML = '';
+  });
+
+  document.querySelector('.cart').appendChild(buttonRemoveAll);
+}
+
 window.onload = function onload() {
   Onload();
+  removeAll();
 };
