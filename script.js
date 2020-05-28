@@ -5,6 +5,7 @@ const findProducts = nameProduct =>
 
 const load = () => {
   const divLoad = document.createElement('div');
+  divLoad.className = 'loading';
   divLoad.innerText = 'loading...';
   return divLoad;
 };
@@ -17,7 +18,7 @@ const sumPrice = () => {
     sumAux = sumAux.split('|')[2].split('$')[1];
     sumTotalItems += parseFloat(sumAux);
   });
-  document.querySelector('.total-price').innerText = `Total: $ ${sumTotalItems.toFixed(2)}`;
+  document.querySelector('.total-price').innerText = sumTotalItemsS;
 };
 
 const SaveLocalStorage = () => {
@@ -133,7 +134,7 @@ const removeAll = () => {
 
 const CreateSumPrice = () => {
   const divSumPrice = document.createElement('div');
-  divSumPrice.innerText = '$ 0.00';
+  divSumPrice.innerText = '0.00';
   divSumPrice.className = 'total-price';
   document.querySelector('.cart').appendChild(divSumPrice);
 };
@@ -147,7 +148,7 @@ const LoadStorage = () => {
     }
   }
   document.querySelector('.total-price').innerText =  // se cont exibe cont, se não ''
-    (localStorage.getItem('price') ? localStorage.getItem('price') : 'Total: $ 0.00');
+    (localStorage.getItem('price') ? localStorage.getItem('price') : '0.00');
 };
 
 window.onload = function onload() {
