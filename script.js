@@ -5,7 +5,7 @@ const findProducts = nameProduct =>
 
 const load = () => {
   const divLoad = document.createElement('div');
-  divLoad.innerText = 'Carregando...';
+  divLoad.innerText = 'loading...';
   return divLoad;
 };
 
