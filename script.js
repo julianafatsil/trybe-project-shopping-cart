@@ -10,15 +10,19 @@ const load = () => {
   return divLoad;
 };
 
-const sumPrice = () => {
-  const items = document.querySelectorAll('.cart__item');
-  let sumTotalItems = 0;
-  items.forEach((item) => {
-    let sumAux = item.innerText;
-    sumAux = sumAux.split('|')[2].split('$')[1];
-    sumTotalItems += parseFloat(sumAux);
-  });
-  document.querySelector('.total-price').innerText = sumTotalItems;
+const sumPrice = async () => {
+  try {
+    const items = await document.querySelectorAll('.cart__item');
+    let sumTotalItems = 0;
+    items.forEach((item) => {
+      let sumAux = item.innerText;
+      sumAux = sumAux.split('|')[2].split('$')[1];
+      sumTotalItems += parseFloat(sumAux);
+    });
+    document.querySelector('.total-price').innerText = sumTotalItems;
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 const SaveLocalStorage = () => {
