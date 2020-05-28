@@ -18,7 +18,7 @@ const sumPrice = () => {
     sumAux = sumAux.split('|')[2].split('$')[1];
     sumTotalItems += parseFloat(sumAux);
   });
-  document.querySelector('.total-price').innerText = sumTotalItemsS;
+  document.querySelector('.total-price').innerText = sumTotalItems;
 };
 
 const SaveLocalStorage = () => {
