@@ -44,6 +44,7 @@ function getSkuFromProductItem(item) { // Recebe o item clicado
 function cartItemClickListener(event) {
   // pega primeira classe e remove seu filho que foi passado no event
   document.querySelector('.cart__items').removeChild(event.path[0]);
+  sumPrice();
 }
 
 const findProductsCart = idProduct =>
@@ -66,6 +67,7 @@ const addItemCart = (event) => { // Pega evento do click
       const itemSelectedCart = document.querySelector('.cart__items');
       // Adiciona produto no carrinho
       itemSelectedCart.appendChild(createCartItemElement(objectProductSelected));
+      sumPrice();
     });
 };
 // Arrow function, que retorna todos os items da API, como filhos da classe ITEMS
@@ -103,12 +105,32 @@ const removeAll = () => {
   buttonRemoveAll.className = 'empty-cart';
   buttonRemoveAll.addEventListener('click', () => {
     document.querySelector('.cart__items').innerHTML = '';
+    sumPrice();
   });
 
   document.querySelector('.cart').appendChild(buttonRemoveAll);
-}
+};
+
+const CreateSumPrice = () => {
+  const divSumPrice = document.createElement('div');
+  divSumPrice.innerText = '$ 0.00';
+  divSumPrice.className = 'total-price';
+  document.querySelector('.cart').appendChild(divSumPrice);
+};
+
+const sumPrice = () => {
+  const items = document.querySelectorAll('.cart__item');
+  let sumTotalItems = 0;
+  items.forEach((item) => {
+    let sumAux = item.innerText;
+    sumAux = sumAux.split('|')[2].split('$')[1];
+    sumTotalItems += parseFloat(sumAux);
+  });
+  document.querySelector('.total-price').innerText = `Total: $ ${sumTotalItems.toFixed(2)}`;
+};
 
 window.onload = function onload() {
   Onload();
+  CreateSumPrice();
   removeAll();
 };
