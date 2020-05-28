@@ -114,7 +114,7 @@ const Onload = () => {
         setTimeout(() => {
           // remove a div load, pois ja foi carregado todos os items
           items.removeChild(divLoad);
-        }, 2000)
+        }, 2000);
       } else {
         items.innerHTML = 'Esta informação veio sem registros!!';
       }
