@@ -23,7 +23,7 @@ const sumPrice = () => {
 const SaveLocalStorage = () => {
   localStorage.setItem('cart', document.querySelector('.cart__items').innerHTML);
   localStorage.setItem('price', document.querySelector('.total-price').innerText);
-}
+};
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -145,7 +145,7 @@ const LoadStorage = () => {
     for (let index = 0; index < divItems.childElementCount; index += 1) {
       divItems.children[index].addEventListener('click', cartItemClickListener);
     }
-  };
+  }
   document.querySelector('.total-price').innerText =  // se cont exibe cont, se não ''
     (localStorage.getItem('price') ? localStorage.getItem('price') : 'Total: $ 0.00');
 };
