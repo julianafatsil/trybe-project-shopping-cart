@@ -20,6 +20,11 @@ const sumPrice = () => {
   document.querySelector('.total-price').innerText = `Total: $ ${sumTotalItems.toFixed(2)}`;
 };
 
+const SaveLocalStorage = () => {
+  localStorage.setItem('cart', document.querySelector('.cart__items').innerHTML);
+  localStorage.setItem('price', document.querySelector('.total-price').innerText);
+}
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -56,6 +61,7 @@ function cartItemClickListener(event) {
   // pega primeira classe e remove seu filho que foi passado no event
   document.querySelector('.cart__items').removeChild(event.path[0]);
   sumPrice();
+  SaveLocalStorage();
 }
 
 const findProductsCart = idProduct =>
@@ -79,6 +85,7 @@ const addItemCart = (event) => { // Pega evento do click
       // Adiciona produto no carrinho
       itemSelectedCart.appendChild(createCartItemElement(objectProductSelected));
       sumPrice();
+      SaveLocalStorage();
     });
 };
 // Arrow function, que retorna todos os items da API, como filhos da classe ITEMS
@@ -117,6 +124,8 @@ const removeAll = () => {
   buttonRemoveAll.addEventListener('click', () => {
     document.querySelector('.cart__items').innerHTML = '';
     sumPrice();
+    localStorage.removeItem('cart');
+    localStorage.removeItem('price');
   });
 
   document.querySelector('.cart').appendChild(buttonRemoveAll);
@@ -129,8 +138,21 @@ const CreateSumPrice = () => {
   document.querySelector('.cart').appendChild(divSumPrice);
 };
 
+const LoadStorage = () => {
+  if (localStorage.getItem('cart')) {
+    const divItems = document.querySelector('.cart__items');
+    divItems.innerHTML = localStorage.getItem('cart');
+    for (let index = 0; index < divItems.childElementCount; index += 1) {
+      divItems.children[index].addEventListener('click', cartItemClickListener);
+    }
+  };
+  document.querySelector('.total-price').innerText =  // se cont exibe cont, se não ''
+    (localStorage.getItem('price') ? localStorage.getItem('price') : 'Total: $ 0.00');
+};
+
 window.onload = function onload() {
   Onload();
   CreateSumPrice();
   removeAll();
+  LoadStorage();
 };
