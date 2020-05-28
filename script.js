@@ -111,12 +111,14 @@ const Onload = () => {
           // CreateProductItemElement recebe objeto, o mesmo é criado como filho do items
           items.appendChild(createProductItemElement(objectProduct));
         });
-        // remove a div load, pois ja foi carregado todos os items
-        items.removeChild(divLoad);
       } else {
         items.innerHTML = 'Esta informação veio sem registros!!';
       }
     })
+    .then(
+      // remove a div load, pois ja foi carregado todos os items
+      items.removeChild(divLoad)
+    )
     .catch((err) => {
       items.innerHTML = `Oops! ${err}`;
     });
