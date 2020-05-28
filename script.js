@@ -9,6 +9,17 @@ const load = () => {
   return divLoad;
 };
 
+const sumPrice = () => {
+  const items = document.querySelectorAll('.cart__item');
+  let sumTotalItems = 0;
+  items.forEach((item) => {
+    let sumAux = item.innerText;
+    sumAux = sumAux.split('|')[2].split('$')[1];
+    sumTotalItems += parseFloat(sumAux);
+  });
+  document.querySelector('.total-price').innerText = `Total: $ ${sumTotalItems.toFixed(2)}`;
+};
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -116,17 +127,6 @@ const CreateSumPrice = () => {
   divSumPrice.innerText = '$ 0.00';
   divSumPrice.className = 'total-price';
   document.querySelector('.cart').appendChild(divSumPrice);
-};
-
-const sumPrice = () => {
-  const items = document.querySelectorAll('.cart__item');
-  let sumTotalItems = 0;
-  items.forEach((item) => {
-    let sumAux = item.innerText;
-    sumAux = sumAux.split('|')[2].split('$')[1];
-    sumTotalItems += parseFloat(sumAux);
-  });
-  document.querySelector('.total-price').innerText = `Total: $ ${sumTotalItems.toFixed(2)}`;
 };
 
 window.onload = function onload() {
