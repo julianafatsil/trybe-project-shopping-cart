@@ -1,15 +1,3 @@
-
-// Faz a comunicação com a API, recebendo por parâmetro o que vai ser consultado
-const findProducts = nameProduct =>
-  fetch(`https://api.mercadolibre.com/sites/MLB/search?q=${nameProduct}`);
-
-const load = () => {
-  const divLoad = document.createElement('div');
-  divLoad.className = 'loading';
-  divLoad.innerText = 'loading...';
-  return divLoad;
-};
-
 const sumPrice = async () => {
   try {
     const items = await document.querySelectorAll('.cart__item');
@@ -80,7 +68,9 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-const addItemCart = (event) => { // Pega evento do click
+const addItemCart = (event) => { 
+  // console.log(event.path);
+  // Pega evento do click
   findProductsCart(getSkuFromProductItem(event.path[1])) // passando como parãmetro o id
     .then(response => response.json())
     .then((data) => {
@@ -93,14 +83,25 @@ const addItemCart = (event) => { // Pega evento do click
       SaveLocalStorage();
     });
 };
+
+const CreateDivLoad = () => {
+  const divLoad = document.createElement('div');
+  divLoad.className = 'loading';
+  divLoad.innerText = 'loading...';
+  return divLoad;
+};
+// Faz a comunicação com a API, recebendo por parâmetro o que vai ser consultado
+const findProducts = nameProduct =>
+  fetch(`https://api.mercadolibre.com/sites/MLB/search?q=${nameProduct}`);
+
 // Arrow function, que retorna todos os items da API, como filhos da classe ITEMS
-const Onload = () => {
-  const items = document.querySelector('.items'); // Pegando a primeira classe que ele encontra .items
-  const divLoad = load();
+const Onload = () => { // pass1
+  const items = document.querySelector('.items'); // Pegando o elemento que tem a classe
+  const divLoad = CreateDivLoad(); // para não ficar criando a função novamente, para não pesar na aplição
   // Recebe a criação da load, para add e depois excluir após items já serem carregados
   items.appendChild(divLoad); // Adicionando a divLoad, como um filho do items
 
-  items.addEventListener('click', addItemCart); // Pega item clicado, e chama a função
+  // items.addEventListener('click', addItemCart); // Pega item clicado, e chama a função
 
   findProducts('computador') // passando o 'computador' por parametro para a função
     .then(response => response.json()) // Primeiro espera a resposta do findProducts
@@ -110,6 +111,9 @@ const Onload = () => {
           const objectProduct = { sku: item.id, name: item.title, image: item.thumbnail };
           // CreateProductItemElement recebe objeto, o mesmo é criado como filho do items
           items.appendChild(createProductItemElement(objectProduct));
+          items.lastElementChild.lastElementChild.addEventListener('click', addItemCart);
+          // console.log(items.childElementCount);
+
         });
         setTimeout(() => {
           // remove a div load, pois ja foi carregado todos os items
